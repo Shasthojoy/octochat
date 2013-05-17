@@ -7,7 +7,7 @@ var settings = require('./settings.js').loadSettings();
 app.use(express.static(__dirname + '/assets'));
 
 app.get('/submittoken', function(req, res) {
-  if (!res.query.error)
+  if (!req.query.error)
     res.send(req.query);
   else
     res.send('errorrrrr');
