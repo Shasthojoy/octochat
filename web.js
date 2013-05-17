@@ -7,4 +7,6 @@ app.get('/', function(req, res) {
   res.send('hello world');
 });
 
-app.listen(process.env.PORT || 3000);
+var appPort = process.env.PORT || 3000;
+app.listen(appPort);
+console.log('Listening on port ' + appPort);
