@@ -18,7 +18,11 @@ app.get('/submittoken', function(req, res) {
     var post_options = {
       host: 'github.com',
         path: '/login/oauth/access_token',
-        method: 'POST'
+        method: 'POST',
+      headers: {
+                  'Content-Type': 'application/x-www-form-urlencoded',
+            'Content-Length': post_data.length
+        }
     };
     var newreq = require('http').request(post_options, function(newres) {
       newres.on('data', function(chunk) {
