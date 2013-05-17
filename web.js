@@ -18,8 +18,9 @@ app.get('/submittoken', function(req, res) {
       null,
       null,
       null);
-    oauth2.getOAuthAccessToken(req.query.code, null, function (e, access_token, refresh_token, results) {
-      res.send('bearer: ' + access_token);
+    oauth2.getOAuthAccessToken(req.query.code, null,
+      function(e, access_token, refresh_token, results) {
+        res.send('bearer: ' + access_token);
     });
   }
 });
