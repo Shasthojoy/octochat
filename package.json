@@ -1,0 +1,23 @@
+{
+  "name": "octochat",
+  "version": "0.0.1",
+  "description": "Chat web app for Github",
+  "repository": {
+    "type": "git",
+    "url": "http://"
+  },
+  "author": "Pasquale Boemio <boemianrapsodi@gmail.com>",
+  "license": "MIT",
+  "readmeFilename": "README.md",
+  "scripts": {
+    "test": "./node_modules/.bin/mocha"
+  },
+  "devDependencies": {
+    "mocha": "~1.9.0"
+  },
+  "dependencies": {
+    "ws": "~0.4.25",
+    "github": "~0.1.8",
+    "express": "~3.2.4"
+  }
+}
