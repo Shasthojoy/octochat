@@ -6,5 +6,9 @@ var settings = require('./settings.js').loadSettings();
 
 app.use(express.static(__dirname + '/assets'));
 
+app.get('/submittoken', function(req, res) {
+  res.send(req.query);
+});
+
 app.listen(settings.port);
 console.log('Listening on port ' + settings.port);
