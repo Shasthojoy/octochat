@@ -16,7 +16,7 @@ app.get('/submittoken', function(req, res) {
     code: req.query.code
    });
     var post_options = {
-      host: 'https://www.github.com',
+      host: 'github.com',
         path: '/login/oauth/access_token',
         method: 'POST'
     };
