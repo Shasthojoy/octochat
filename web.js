@@ -7,7 +7,10 @@ var settings = require('./settings.js').loadSettings();
 app.use(express.static(__dirname + '/assets'));
 
 app.get('/submittoken', function(req, res) {
-  res.send(req.query);
+  if (!res.query.error)
+    res.send(req.query);
+  else
+    res.send('errorrrrr');
 });
 
 app.listen(settings.port);
