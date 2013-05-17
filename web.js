@@ -8,7 +8,7 @@ app.use(express.static(__dirname + '/assets'));
 
 app.get('/submittoken', function(req, res) {
   if (req.query.error)
-    res.send('error');
+    res.sendfile(__dirname + '/assets/errorpage.html', 401);
   else {
     var OAuth = require('oauth');
     var OAuth2 = OAuth.OAuth2;
