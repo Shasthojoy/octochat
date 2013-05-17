@@ -2,9 +2,9 @@
 
 var express = require('express');
 var app = express();
+var settings = require('./settings.js').loadSettings();
 
 app.use(express.static(__dirname + '/assets'));
 
-var appPort = process.env.PORT || 3000;
-app.listen(appPort);
-console.log('Listening on port ' + appPort);
+app.listen(settings.port);
+console.log('Listening on port ' + settings.port);
