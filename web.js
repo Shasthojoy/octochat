@@ -14,12 +14,16 @@ app.get('/submittoken', function(req, res) {
     var OAuth2 = OAuth.OAuth2;
     var oauth2 = new OAuth2('cf150584080448a4c1d7',
       'a5068d6edc24cd23c4fa19cf12689952995f5da4',
-      'github.com/login',
-      null,
-      null,
+      'https://github.com',
+      '/login/oauth/authorize',
+      '/login/oauth/access_token',
       null);
     oauth2.getOAuthAccessToken(req.query.code, null,
       function(e, access_token, refresh_token, results) {
+        if(e) {
+          res.send(e);
+          return;
+        }
         res.send('bearer: ' + access_token);
     });
   }
