@@ -6,7 +6,7 @@ var settings = require('./settings.js').loadSettings();
 
 app.use(express.static(__dirname + '/assets'));
 
-app.get('/submittoken', function(req, res) {
+app.get('/confirmtoken', function(req, res) {
   res.send(req.query);
 });
 
