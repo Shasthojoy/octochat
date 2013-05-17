@@ -3,9 +3,7 @@
 var express = require('express');
 var app = express();
 
-app.get('/', function(req, res) {
-  res.send('hello world');
-});
+app.use(express.static(__dirname + '/assets'));
 
 var appPort = process.env.PORT || 3000;
 app.listen(appPort);
