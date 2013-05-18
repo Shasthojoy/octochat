@@ -20,6 +20,14 @@ var sendErrorPage = function(req, res) {
   res.sendfile(settings.errorpage, 400);
 };
 
+var authenticateRequest = function(req, res, next) {
+  if (!req.session.userid) res.sendfile('/index.html');
+  else next();
+};
+
+app.get('/', authenticateRequest, function(req, res) {
+  res.redirect('/chat');
+});
 app.get('/submittoken', UserController.grantAccess);
 app.get('/errorpage', sendErrorPage);
 app.get('/chat', function(req, res) {
