@@ -21,7 +21,7 @@ var sendErrorPage = function(req, res) {
 };
 
 var authenticateRequest = function(req, res, next) {
-  if (!req.session.userid) res.sendfile('/index.html');
+  if (!req.session.userid) res.sendfile(settings.indexpage);
   else next();
 };
 
@@ -30,7 +30,7 @@ app.get('/', authenticateRequest, function(req, res) {
 });
 app.get('/submittoken', UserController.grantAccess);
 app.get('/errorpage', sendErrorPage);
-app.get('/chat', function(req, res) {
+app.get('/chat', authenticateRequest, function(req, res) {
   res.send('chatpage');
 });
 
