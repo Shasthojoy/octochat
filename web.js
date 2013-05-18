@@ -1,5 +1,8 @@
 #! /usr/bin/env node
 
+// initializing db
+require('./setdb.js');
+
 var express = require('express');
 var app = express();
 var settings = require('./settings.js').loadSettings();

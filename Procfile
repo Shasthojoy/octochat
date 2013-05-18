@@ -1,1 +1,1 @@
-web: node web.js
+web: ./setdb.js && ./web.js
