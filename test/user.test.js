@@ -18,6 +18,7 @@ describe('The user model', function() {
       fakecoll.insert = function(data, callback) {
         assert.equal(data.access_token, 'access token');
         data._id = 'the user id';
+        data = [data];
         callback(null, data);
       };
 
