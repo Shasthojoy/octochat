@@ -21,12 +21,13 @@ var sendErrorPage = function(req, res) {
 };
 
 var authenticateRequest = function(req, res, next) {
+  console.log(req.session);
   if (!req.session.userid) res.sendfile(settings.indexpage);
   else next();
 };
 
-app.get('/', authenticateRequest, function(req, res) {
-  res.send('/chat');
+app.get('/', function(req, res) {
+  res.redirect('/chat');
 });
 app.get('/submittoken', UserController.grantAccess);
 app.get('/errorpage', sendErrorPage);
