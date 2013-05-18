@@ -6,7 +6,8 @@ var settings = {
   'clientsecret': 'a5068d6edc24cd23c4fa19cf12689952995f5da4',
   'githuburl': 'https://github.com',
   'authurl': '/login/oauth/authorize',
-  'tokenurl': '/login/oauth/access_token'
+  'tokenurl': '/login/oauth/access_token',
+  'secret': 'a stupid secret to crypt session stuffs'
 };
 
 /**
