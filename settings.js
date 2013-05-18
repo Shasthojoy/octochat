@@ -2,6 +2,7 @@ var settings = {
   'staticfolder': __dirname + '/assets',
   'errorpage': __dirname + '/assets/errorpage.html',
   'indexpage': __dirname + '/assets/index.html',
+  'viewsfolder': __dirname + '/pages',
   'port': 3000,
   'mongourl': 'mongodb://localhost/octochat',
   'clientid': 'cf150584080448a4c1d7',

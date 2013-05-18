@@ -15,14 +15,16 @@ app.use(express.session({
   secret: settings.secret,
   store: new express.session.MemoryStore
 }));
+app.engine('html', require('consolidate').mustache);
+app.set('views', settings.viewsfolder);
+app.set('view engine', 'html');
 
 var sendErrorPage = function(req, res) {
-  res.sendfile(settings.errorpage, 400);
+  res.render('errorpage');
 };
 
 var authenticateRequest = function(req, res, next) {
-  console.log(req.session);
-  if (!req.session.userid) res.sendfile(settings.indexpage);
+  if (!req.session.userid) res.render('index');
   else next();
 };
 
@@ -32,7 +34,7 @@ app.get('/', function(req, res) {
 app.get('/submittoken', UserController.grantAccess);
 app.get('/errorpage', sendErrorPage);
 app.get('/chat', authenticateRequest, function(req, res) {
-  res.send('chatpage');
+  res.render('chatpage');
 });
 
 app.listen(settings.port);
