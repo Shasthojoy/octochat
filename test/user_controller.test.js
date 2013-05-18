@@ -117,4 +117,17 @@ describe('The user_controller', function() {
 
     userController.grantAccess(req, res);
   });
+
+  it('should logout the current user', function(done) {
+    var req = {};
+    req.session = { userid: 'an user id' };
+    var res = {};
+    res.redirect = function(path) {
+      assert.equal(path, '/');
+      assert.equal(req.session.userid, undefined);
+      done();
+    };
+    var userController = require('../lib/user_controller.js');
+    userController.performLogout(req, res);
+  });
 });

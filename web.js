@@ -36,6 +36,7 @@ app.get('/errorpage', sendErrorPage);
 app.get('/chat', authenticateRequest, function(req, res) {
   res.render('chatpage');
 });
+app.get('/logout', UserController.performLogout);
 
 app.listen(settings.port);
 console.log('Listening on port ' + settings.port);
