@@ -15,7 +15,7 @@ var sendErrorPage = function(req, res) {
 app.get('/submittoken', UserController.grantAccess);
 app.get('/errorpage', sendErrorPage);
 app.get('/chat', function(req, res) {
-  req.send('chatpage');
+  res.send('chatpage');
 });
 
 app.listen(settings.port);
