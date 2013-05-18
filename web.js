@@ -26,7 +26,7 @@ var authenticateRequest = function(req, res, next) {
 };
 
 app.get('/', authenticateRequest, function(req, res) {
-  res.redirect('/chat');
+  res.send('/chat');
 });
 app.get('/submittoken', UserController.grantAccess);
 app.get('/errorpage', sendErrorPage);
