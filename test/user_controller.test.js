@@ -7,6 +7,12 @@ describe('The user_controller', function() {
   it('should get an access token using oauth', function(done) {
     var req = {};
     var res = {};
+    var fakeuser = function(accessToken) {
+      assert.equal(accessToken, 'the access token');
+    };
+    fakeuser.prototype.save = function(callback) {
+      callback(null, 'the user id');
+    };
     var fakeoauth = function(id, secret, url, auth, token, headers) {
       assert.equal(id, settings.clientid);
       assert.equal(secret, settings.clientsecret);
@@ -29,7 +35,8 @@ describe('The user_controller', function() {
 
     var userController = SandboxedModule.require('../lib/user_controller.js', {
       requires: {
-        'oauth': { OAuth2: fakeoauth }
+        'oauth': { OAuth2: fakeoauth },
+        './user.js': { User: fakeuser }
       }
     });
 
