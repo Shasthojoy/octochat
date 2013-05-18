@@ -1,7 +1,19 @@
 var settings = {
-  'port' : 3000
+  'staticfolder': __dirname + '/assets',
+  'errorpage': __dirname + '/assets/errorpage.html',
+  'port': 3000,
+  'clientid': 'cf150584080448a4c1d7',
+  'clientsecret': 'a5068d6edc24cd23c4fa19cf12689952995f5da4',
+  'githuburl': 'https://github.com',
+  'authurl': '/login/oauth/authorize',
+  'tokenurl': '/login/oauth/access_token'
 };
 
+/**
+ * @return {Object} The settings object.
+ *
+ * This method is used to load current settings
+ */
 exports.loadSettings = function() {
   if (process.env.PORT)
     settings.port = process.env.PORT;
