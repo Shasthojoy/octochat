@@ -10,7 +10,8 @@
   "license": "MIT",
   "readmeFilename": "README.md",
   "scripts": {
-    "test": "./node_modules/.bin/mocha test/*.mochatest.js"
+    "test": "make alltests",
+    "run": "node ./web.js"
   },
   "devDependencies": {
     "mocha": "~1.9.0",

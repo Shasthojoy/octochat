@@ -3,4 +3,4 @@ alltests:
 	./node_modules/.bin/karma start ./test/karmaconf.js $$*
 
 karmadev:
-	./node_modules/.bin/karma start ./test/karmadev.js $$*
+	PHANTOMJS_BIN="/usr/local/share/npm/bin/phantomjs" ./node_modules/.bin/karma start ./test/karmadev.js $$*
