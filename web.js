@@ -15,9 +15,10 @@ app.use(express.session({
   secret: settings.secret,
   store: new express.session.MemoryStore
 }));
-app.engine('html', require('consolidate').mustache);
+//app.engine('html', require('consolidate').mustache);
 app.set('views', settings.viewsfolder);
-app.set('view engine', 'html');
+//app.set('view engine', 'html');
+app.set('view engine', 'ejs');
 
 var sendErrorPage = function(req, res) {
   res.render('errorpage');
