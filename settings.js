@@ -1,7 +1,5 @@
 var settings = {
   'staticfolder': __dirname + '/assets',
-  'errorpage': __dirname + '/assets/errorpage.html',
-  'indexpage': __dirname + '/assets/index.html',
   'viewsfolder': __dirname + '/pages',
   'port': 3000,
   'mongourl': 'mongodb://localhost/octochat',
@@ -10,7 +8,8 @@ var settings = {
   'githuburl': 'https://github.com',
   'authurl': '/login/oauth/authorize',
   'tokenurl': '/login/oauth/access_token',
-  'secret': 'a stupid secret to crypt session stuffs'
+  'secret': 'a stupid secret to crypt session stuffs',
+  'ERR0' : 'request failed'
 };
 
 /**

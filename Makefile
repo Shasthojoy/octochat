@@ -1,5 +1,9 @@
-alltests:
+alltests: nodetest firefoxtest
+
+nodetest:
 	./node_modules/.bin/mocha test/*.mochatest.js
+
+firefoxtest:
 	./node_modules/.bin/karma start ./test/karmaconf.js $$*
 
 karmadev:

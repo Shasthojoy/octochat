@@ -1,5 +1,3 @@
-#! /usr/bin/env node
-
 var octodb = require('./lib/octodb.js');
 
 octodb.connectToDb(function(err, db) {

@@ -1,5 +1,4 @@
-require('should');
-var assert = require('assert');
+var assert = require('chai').assert;
 var SandboxedModule = require('sandboxed-module');
 
 describe('The user model', function() {
@@ -80,5 +79,77 @@ describe('The user model', function() {
     user.save(checkCallback);
   });
 
+  it('should search an User by id', function(done) {
+    var fakedb = {};
+    fakedb.close = function() {};
+    fakedb.collection = function(name, callback) {
+      assert.equal(name, 'users');
+      var fakecoll = {};
+      fakecoll.findOne = function(data, callback) {
+        assert.equal(data._id.id, 'the user id');
+        data.access_token = 'the access token';
+        callback(null, data);
+      };
+
+      callback(null, fakecoll);
+    };
+    var fakedbmodule = {};
+    fakedbmodule.ID = function(string) {
+      this.id = string;
+    };
+    fakedbmodule.connectToDb = function(callback) {
+      callback(null, fakedb);
+    };
+    var User = SandboxedModule.require('../lib/user.js', {
+      requires: {
+        './octodb.js': fakedbmodule
+      }
+    });
+
+    var checkCallback = function(err, user) {
+      assert.equal(user.accessToken, 'the access token');
+      assert.equal(err, null);
+      done();
+    };
+
+    User.find('the user id', checkCallback);
+
+  });
+
+  it('should pass err if id is not present', function(done) {
+    var fakedb = {};
+    fakedb.close = function() {};
+    fakedb.collection = function(name, callback) {
+      assert.equal(name, 'users');
+      var fakecoll = {};
+      fakecoll.findOne = function(data, callback) {
+        assert.equal(data._id.id, 'the user id');
+        callback('an error', null);
+      };
+
+      callback(null, fakecoll);
+    };
+    var fakedbmodule = {};
+    fakedbmodule.ID = function(string) {
+      this.id = string;
+    };
+    fakedbmodule.connectToDb = function(callback) {
+      callback(null, fakedb);
+    };
+    var User = SandboxedModule.require('../lib/user.js', {
+      requires: {
+        './octodb.js': fakedbmodule
+      }
+    });
+
+    var checkCallback = function(err, user) {
+      assert.equal(user, null);
+      assert.notEqual(err, null);
+      done();
+    };
+
+    User.find('the user id', checkCallback);
+
+  });
 
 });

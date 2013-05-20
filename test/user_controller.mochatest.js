@@ -1,5 +1,4 @@
-require('should');
-var assert = require('assert');
+var assert = require('chai').assert;
 var SandboxedModule = require('sandboxed-module');
 var settings = require('../settings.js').loadSettings();
 
@@ -130,4 +129,58 @@ describe('The user_controller', function() {
     var userController = require('../lib/user_controller.js');
     userController.performLogout(req, res);
   });
+
+  it('should load the repo list of a saved user', function(done) {
+    var req = {};
+    req.session = { userid: 'an user id' };
+    var res = {};
+    res.send = function(code, jsonList) {
+      assert.equal(code, 200);
+      assert.equal(jsonList.repos.length, 2);
+      done();
+    };
+    var fakerepo = {};
+    fakerepo.getUserRepos = function(user, callback) {
+      assert.equal(user.accessToken, 'the user token');
+      callback(null, ['repo1', 'repo2']);
+    };
+    var fakeuser = {};
+    fakeuser.find = function(userid, callback) {
+      assert.equal(userid, 'an user id');
+      callback(null, { accessToken: 'the user token' });
+    };
+    var userController = SandboxedModule.require('../lib/user_controller.js', {
+      requires: {
+        './user.js': fakeuser,
+        './repo.js': fakerepo
+      }
+    });
+
+    userController.getUserRepoList(req, res);
+  });
+
+  it('should reply with an error if user is not found', function(done) {
+    var req = {};
+    req.session = { userid: 'an user id' };
+    var res = {};
+    res.send = function(code, jsonError) {
+      assert.equal(code, 400);
+      assert.equal(jsonError.code, 'ERR0');
+      assert.equal(jsonError.desc, 'request failed');
+      done();
+    };
+    var fakeuser = {};
+    fakeuser.find = function(userid, callback) {
+      assert.equal(userid, 'an user id');
+      callback('an error', null);
+    };
+    var userController = SandboxedModule.require('../lib/user_controller.js', {
+      requires: {
+        './user.js': fakeuser
+      }
+    });
+
+    userController.getUserRepoList(req, res);
+  });
+
 });

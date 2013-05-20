@@ -1,7 +1,8 @@
 basePath = '../';
 files = [
-  JASMINE,
-  JASMINE_ADAPTER,
+  MOCHA,
+  MOCHA_ADAPTER,
+  'node_modules/chai/chai.js',
   'test/*.karmatest.js',
   'weblib/*.js'
   ];
