@@ -13,6 +13,10 @@
       {{User.loginName}}
       <img src="{{User.avatarUrl}}">
       </p>
+      <p ng-hide="User.avatarUrl">
+        Have you ever updated your informations?
+        <button ng-click="update()">update</button>
+      </p>
       <a href="/logout">logout</a>
     </div>
     <div class="row">
