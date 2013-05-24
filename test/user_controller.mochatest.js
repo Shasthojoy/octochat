@@ -203,11 +203,17 @@ describe('The user_controller', function() {
     };
     var fakeInnerUser = function() {};
     fakeInnerUser.prototype.get = function(object, callback) {
-      callback(null, { login_name: 'the user login name' });
+      callback(null, { login: 'the user login name' });
+    };
+    var fakeInnerRepo = function() {};
+    fakeInnerRepo.prototype.getFromUser = function(object, callback) {
+      assert(object.user, 'the user login name');
+      callback(null, [{full_name: 'repo1'}, {full_name: 'repo2'}]);
     };
     var fakegithub = function(object) {
       assert.equal(object.version, '3.0.0');
       this.user = new fakeInnerUser();
+      this.repos = new fakeInnerRepo();
     };
     fakegithub.prototype.authenticate = function(object) {
       assert.equal(object.type, 'oauth');

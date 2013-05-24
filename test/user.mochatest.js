@@ -167,6 +167,7 @@ describe('The user model', function() {
         assert.equal(data.access_token, 'access token');
         assert.equal(data.login_name, 'login name');
         assert.equal(data.avatar_url, 'avatar url');
+        assert.equal(data.repos, 'user repos');
         assert.equal(options.upsert, 1);
         callback(null, data);
       };
@@ -192,6 +193,7 @@ describe('The user model', function() {
       assert.equal(user.accessToken, 'access token');
       assert.equal(user.loginName, 'login name');
       assert.equal(user.avatarUrl, 'avatar url');
+      assert.equal(user.repos, 'user repos');
       assert.equal(err, null);
       done();
     };
@@ -200,6 +202,7 @@ describe('The user model', function() {
     user.id = 'the user id';
     user.loginName = 'login name';
     user.avatarUrl = 'avatar url';
+    user.repos = 'user repos';
     user.update(checkCallback);
 
   });
