@@ -3,24 +3,32 @@
   <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="/css/bootstrap.css">
+    <link rel="stylesheet" href="/css/font-awesome.min.css">    
     <script src="/js/angular.min.js"></script>
     <script src="/js/octochat.min.js"></script>
+    <script src="/js/jquery.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
     <title>Chatpage</title>
   </head>
   <body>
-    <div ng-controller="UserController">
-      <p ng-show="User.avatarUrl">
-      {{User.loginName}}
-      <img src="{{User.avatarUrl}}">
-      </p>
-      <p ng-hide="User.avatarUrl">
-        Have you ever updated your informations?
-        <button ng-click="update()">update</button>
-      </p>
-      <a href="/logout">logout</a>
-    </div>
     <div class="row">
       <div class="span4">
+        <div ng-controller="UserController">
+          <img ng-show="User.avatarUrl" src="{{User.avatarUrl}}">
+          <div ng-show="User.loginName" class="btn-group">
+            <button class="btn btn-info dropdown-toggle" data-toggle="dropdown" href="#">
+              {{User.loginName}}
+              <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+              <li><a href="#" ng-click="update()"><i class="icon-refresh"></i> Refresh</a></li>
+              <li><a href="/logout"><i class="icon-signout"></i> Logout</a></li>
+            </ul>
+          </div>
+          <p ng-hide="User.loginName">
+          <a ng-click="update()">Have you ever updated your informations?</a>
+          </p>
+        </div>
         <div ng-controller="RepoListController">
           <ul>
             <li ng-repeat="repo in repos">
