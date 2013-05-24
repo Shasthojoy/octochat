@@ -27,17 +27,17 @@ var authenticateRequest = function(req, res, next) {
 app.get('/', function(req, res) {
   res.redirect('/chat');
 });
+app.get('/submittoken', UserController.grantAccess);
 app.get('/errorpage', function(req, res) {
   res.render('errorpage');
 });
 app.get('/chat', authenticateRequest, function(req, res) {
   res.render('chatpage');
 });
-app.get('/submittoken', UserController.grantAccess);
-app.get('/logout', UserController.performLogout);
+app.get('/logout', authenticateRequest, UserController.performLogout);
 //app.get('/repos', UserController.getUserRepoList);
-app.get('/user', UserController.getUser);
-app.put('/user', UserController.updateUser);
+app.get('/user', authenticateRequest, UserController.getUser);
+app.put('/user', authenticateRequest, UserController.updateUser);
 
 server.listen(settings.port);
 console.log('Listening on port ' + settings.port);
