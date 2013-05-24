@@ -3,6 +3,9 @@ alltests: nodetest firefoxtest
 compile:
 	./node_modules/.bin/uglifyjs weblib/* -o assets/js/octochat.min.js
 
+run: compile
+	node web.js
+
 nodetest:
 	./node_modules/.bin/mocha test/*.mochatest.js
 
