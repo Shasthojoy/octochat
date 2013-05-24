@@ -14,7 +14,13 @@ octodb.connectToDb(function(err, db) {
       var keys = { access_token: 1 };
       var params = { unique: true };
       collection.ensureIndex(keys, params, function(err, replies) {
-        collection.insert({ access_token: 'TOKEN' }, function(err, result) {
+        var template_user = {
+          access_token: 'TOKEN',
+          login_name: 'LOGIN NAME',
+          avatar_url: 'AVATAR_URL',
+          repos: []
+        };
+        collection.insert(template_user, function(err, result) {
           console.log('Inserted ' + JSON.stringify(result));
           db.close();
         });

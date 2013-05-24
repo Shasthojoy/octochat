@@ -130,33 +130,33 @@ describe('The user_controller', function() {
     userController.performLogout(req, res);
   });
 
-  it('should load the repo list of a saved user', function(done) {
+  it('should get current user informations', function(done) {
+    var fakeUserObject = {
+      accessToken: 'the user token',
+      repos: [
+        { name: 'reponame' }
+       ]
+    };
     var req = {};
     req.session = { userid: 'an user id' };
     var res = {};
-    res.send = function(code, jsonList) {
+    res.send = function(code, userAsJson) {
       assert.equal(code, 200);
-      assert.equal(jsonList.repos.length, 2);
+      assert.equal(userAsJson, fakeUserObject);
       done();
-    };
-    var fakerepo = {};
-    fakerepo.getUserRepos = function(user, callback) {
-      assert.equal(user.accessToken, 'the user token');
-      callback(null, ['repo1', 'repo2']);
     };
     var fakeuser = {};
     fakeuser.find = function(userid, callback) {
       assert.equal(userid, 'an user id');
-      callback(null, { accessToken: 'the user token' });
+      callback(null, fakeUserObject);
     };
     var userController = SandboxedModule.require('../lib/user_controller.js', {
       requires: {
-        './user.js': fakeuser,
-        './repo.js': fakerepo
+        './user.js': fakeuser
       }
     });
 
-    userController.getUserRepoList(req, res);
+    userController.getUser(req, res);
   });
 
   it('should reply with an error if user is not found', function(done) {
@@ -180,7 +180,139 @@ describe('The user_controller', function() {
       }
     });
 
-    userController.getUserRepoList(req, res);
+    userController.getUser(req, res);
   });
+
+  it('should update informations from GitHub', function(done) {
+    var req = {};
+    req.session = { userid: 'an user id' };
+    var res = {};
+    res.send = function(code, userAsJson) {
+      assert.equal(code, 200);
+      assert.equal(userAsJson, 'the user object');
+      done();
+    };
+    var fakeuser = {};
+    fakeuser.find = function(userid, callback) {
+      assert.equal(userid, 'an user id');
+      var userFound = { accessToken: 'the user token' };
+      userFound.save = function(callback) {
+        callback(null, 'the user object');
+      };
+      callback(null, userFound);
+    };
+    var fakeInnerUser = function() {};
+    fakeInnerUser.prototype.get = function(object, callback) {
+      callback(null, { login_name: 'the user login name' });
+    };
+    var fakegithub = function(object) {
+      assert.equal(object.version, '3.0.0');
+      this.user = new fakeInnerUser();
+    };
+    fakegithub.prototype.authenticate = function(object) {
+      assert.equal(object.type, 'oauth');
+      assert.equal(object.token, 'the user token');
+    };
+
+    var userController = SandboxedModule.require('../lib/user_controller.js', {
+      requires: {
+        './user.js': fakeuser,
+        'github': fakegithub
+      }
+    });
+
+    userController.updateUser(req, res);
+  });
+
+  it('should reply an error if user to update doesn\'t exists', function(done) {
+    var req = {};
+    req.session = { userid: 'an user id' };
+    var res = {};
+    res.send = function(code, jsonError) {
+      assert.equal(code, 400);
+      assert.equal(jsonError.code, 'ERR0');
+      assert.equal(jsonError.desc, 'request failed');
+      done();
+    };
+    var fakeuser = {};
+    fakeuser.find = function(userid, callback) {
+      assert.equal(userid, 'an user id');
+      callback('an error', null);
+    };
+    var userController = SandboxedModule.require('../lib/user_controller.js', {
+      requires: {
+        './user.js': fakeuser
+      }
+    });
+
+    userController.updateUser(req, res);
+  });
+
+  it('should reply an error if there is a problem with GitHub', function(done) {
+    var req = {};
+    req.session = { userid: 'an user id' };
+    var res = {};
+    res.send = function(code, jsonError) {
+      assert.equal(code, 400);
+      assert.equal(jsonError.code, 'ERR0');
+      assert.equal(jsonError.desc, 'request failed');
+      done();
+    };
+    var fakeuser = {};
+    fakeuser.find = function(userid, callback) {
+      var userFound = { accessToken: 'the user token' };
+      callback(null, userFound);
+    };
+    var fakeInnerUser = function() {};
+    fakeInnerUser.prototype.get = function(object, callback) {
+      callback('an error', null);
+    };
+    var fakegithub = function(object) {
+      assert.equal(object.version, '3.0.0');
+      this.user = new fakeInnerUser();
+    };
+    fakegithub.prototype.authenticate = function(object) {
+      assert.equal(object.type, 'oauth');
+      assert.equal(object.token, 'the user token');
+    };
+
+    var userController = SandboxedModule.require('../lib/user_controller.js', {
+      requires: {
+        './user.js': fakeuser,
+        'github': fakegithub
+      }
+    });
+
+    userController.updateUser(req, res);
+  });
+
+  //it('should load the repo list of a saved user', function(done) {
+    //var req = {};
+    //req.session = { userid: 'an user id' };
+    //var res = {};
+    //res.send = function(code, jsonList) {
+      //assert.equal(code, 200);
+      //assert.equal(jsonList.repos.length, 2);
+      //done();
+    //};
+    //var fakerepo = {};
+    //fakerepo.getUserRepos = function(user, callback) {
+      //assert.equal(user.accessToken, 'the user token');
+      //callback(null, ['repo1', 'repo2']);
+    //};
+    //var fakeuser = {};
+    //fakeuser.find = function(userid, callback) {
+      //assert.equal(userid, 'an user id');
+      //callback(null, { accessToken: 'the user token' });
+    //};
+    //var userController = SandboxedModule.require('../lib/user_controller.js', {
+      //requires: {
+        //'./user.js': fakeuser,
+        //'./repo.js': fakerepo
+      //}
+    //});
+
+    //userController.getUserRepoList(req, res);
+  //});
 
 });

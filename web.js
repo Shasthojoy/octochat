@@ -35,7 +35,8 @@ app.get('/chat', authenticateRequest, function(req, res) {
 });
 app.get('/submittoken', UserController.grantAccess);
 app.get('/logout', UserController.performLogout);
-app.get('/repos', UserController.getUserRepoList);
+//app.get('/repos', UserController.getUserRepoList);
+app.get('/user', UserController.getUser);
 
 server.listen(settings.port);
 console.log('Listening on port ' + settings.port);
