@@ -52,8 +52,12 @@ describe('The user model', function() {
       assert.equal(name, 'users');
       var fakecoll = {};
       fakecoll.insert = function(data, callback) {
-        data._id = 'the user id';
         callback('error', null);
+      };
+      fakecoll.findOne = function(data, callback) {
+        assert.equal(data.access_token, 'access token');
+        data._id = 'the user id';
+        callback(null, data);
       };
 
       callback(null, fakecoll);
