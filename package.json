@@ -18,7 +18,8 @@
     "mocha": "~1.9.0",
     "sandboxed-module": "~0.2.0",
     "karma": "~0.8.5",
-    "chai": "~1.6.0"
+    "chai": "~1.6.0",
+    "uglify-js": "~2.3.6"
   },
   "dependencies": {
     "github": "~0.1.8",

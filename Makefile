@@ -1,5 +1,8 @@
 alltests: nodetest firefoxtest
 
+compile:
+	./node_modules/.bin/uglifyjs weblib/* -o assets/js/octochat.min.js
+
 nodetest:
 	./node_modules/.bin/mocha test/*.mochatest.js
 

@@ -4,10 +4,17 @@
     <meta charset="utf-8">
     <link rel="stylesheet" href="/css/bootstrap.css">
     <script src="/js/angular.min.js"></script>
+    <script src="/js/octochat.min.js"></script>
     <title>Chatpage</title>
   </head>
   <body>
-    <a href="/logout">logout</a>
+    <div ng-controller="UserController">
+      <p ng-show="User.avatarUrl">
+      {{User.loginName}}
+      <img src="{{User.avatarUrl}}">
+      </p>
+      <a href="/logout">logout</a>
+    </div>
     <div class="row">
       <div class="span4">
         <div ng-controller="RepoListController">

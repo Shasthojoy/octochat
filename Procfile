@@ -1,1 +1,1 @@
-web: node ./web.js
+web: make compile && node ./web.js
