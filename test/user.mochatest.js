@@ -152,4 +152,52 @@ describe('The user model', function() {
 
   });
 
+  it('should update the current user', function(done) {
+    var fakedb = {};
+    fakedb.close = function() {};
+    fakedb.collection = function(name, callback) {
+      assert.equal(name, 'users');
+      var fakecoll = {};
+      fakecoll.update = function(key, data, options, callback) {
+        assert.equal(key._id.id, 'the user id');
+        assert.equal(data.access_token, 'access token');
+        assert.equal(data.login_name, 'login name');
+        assert.equal(data.avatar_url, 'avatar url');
+        assert.equal(options.upsert, 1);
+        callback(null, data);
+      };
+
+      callback(null, fakecoll);
+    };
+    var fakedbmodule = {};
+    fakedbmodule.connectToDb = function(callback) {
+      callback(null, fakedb);
+    };
+    fakedbmodule.ID = function(string) {
+      this.id = string;
+    };
+
+    var User = SandboxedModule.require('../lib/user.js', {
+      requires: {
+        './octodb.js': fakedbmodule
+      }
+    }).User;
+
+    var checkCallback = function(err, user) {
+      assert.equal(user.id, 'the user id');
+      assert.equal(user.accessToken, 'access token');
+      assert.equal(user.loginName, 'login name');
+      assert.equal(user.avatarUrl, 'avatar url');
+      assert.equal(err, null);
+      done();
+    };
+
+    var user = new User('access token');
+    user.id = 'the user id';
+    user.loginName = 'login name';
+    user.avatarUrl = 'avatar url';
+    user.update(checkCallback);
+
+  });
+
 });

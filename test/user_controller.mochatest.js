@@ -196,7 +196,7 @@ describe('The user_controller', function() {
     fakeuser.find = function(userid, callback) {
       assert.equal(userid, 'an user id');
       var userFound = { accessToken: 'the user token' };
-      userFound.save = function(callback) {
+      userFound.update = function(callback) {
         callback(null, 'the user object');
       };
       callback(null, userFound);
