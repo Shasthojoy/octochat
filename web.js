@@ -8,7 +8,7 @@ var io = require('socket.io').listen(server);
 var settings = require('./settings.js').loadSettings();
 
 var UserController = require('./lib/user_controller.js');
-var RepoController = require('./lib/repo_controller.js');
+//var RepoController = require('./lib/repo_controller.js');
 
 app.use(express.static(settings.staticfolder));
 app.use(express.cookieParser());
@@ -37,7 +37,7 @@ app.get('/submittoken', UserController.grantAccess);
 app.get('/logout', UserController.performLogout);
 //app.get('/repos', UserController.getUserRepoList);
 app.get('/user', UserController.getUser);
-app.update('/user', UserController.updateUser);
+app.put('/user', UserController.updateUser);
 
 server.listen(settings.port);
 console.log('Listening on port ' + settings.port);
