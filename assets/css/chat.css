@@ -1,0 +1,29 @@
+.rocketlink:link {
+  color:black;
+  text-decoration:none;
+}
+
+.rocketlink:visited {
+  color:black;
+  text-decoration:none;
+}
+
+.rocketlink:active {
+  color:black;
+  text-decoration:none;
+}
+
+.rocketlink:hover {
+  color:black;
+  text-decoration:none;
+}
+
+.joinbox {
+  text-align: center;
+  margin-top: 5px;
+}
+
+.profilebox {
+  text-align: center;
+  margin-top: 5px;
+}

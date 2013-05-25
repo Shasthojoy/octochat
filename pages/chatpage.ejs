@@ -3,7 +3,8 @@
   <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="/css/bootstrap.css">
-    <link rel="stylesheet" href="/css/font-awesome.min.css">    
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/chat.css">
     <script src="/js/angular.min.js"></script>
     <script src="/js/octochat.min.js"></script>
     <script src="/js/jquery.js"></script>
@@ -15,39 +16,41 @@
     <div class="row">
       <div class="span4">
         <div ng-controller="UserController">
-          <img ng-show="User.avatarUrl" src="{{User.avatarUrl}}">
-          <div ng-show="User.loginName" class="btn-group">
-            <button class="btn btn-info dropdown-toggle" data-toggle="dropdown" href="#">
-              {{User.loginName}}
-              <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu">
-              <li><a href="#" ng-click="update()"><i class="icon-refresh"></i> Refresh</a></li>
-              <li><a href="/logout"><i class="icon-signout"></i> Logout</a></li>
-            </ul>
-          </div>
-          <p ng-hide="User.loginName">
-          <a ng-click="update()">Have you ever updated your informations?</a>
-          </p>
-          <ng:switch on="User.repo>0">
-          <div ng:switch-when="false" class="accordion" id="reposList">
-            <div class="accordion-group">
-              <div class="accordion-heading">
-                <a class="accordion-toggle" data-toggle="collapse" data-parent="#reposList" href="#repoListData">
-                  Repos
-                </a>
+          <div>
+            <div class="profilebox">
+              <img ng-show="User.avatarUrl" src="{{User.avatarUrl}}">
+              <div ng-show="User.loginName" class="btn-group">
+                <button class="btn btn-info dropdown-toggle" data-toggle="dropdown" href="#">
+                 {{User.loginName}}
+                  <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                  <li><a href="#" ng-click="update()"><i class="icon-refresh"></i> Refresh</a></li>
+                  <li><a href="/logout"><i class="icon-signout"></i> Logout</a></li>
+                </ul>
               </div>
-
-              <div id="repoListData" class="accordion-body collapse in">
-                <div class="accordion-inner">
-                  <ul>
-                    <li ng-repeat="repo in User.repos">{{repo.name}}</li>
-                  </ul>
-                </div>
+            </div>
+            <div class="joinbox">
+              <div class="input-append">
+                <input class="span2" placeholder="Join room..." type="text">
+                <span class="add-on"><a href="#" class="rocketlink"><i class="icon-rocket"></i></a></span>
               </div>
             </div>
           </div>
+          <div ng-hide="User.loginName">
+            <a ng-click="update()">Have you ever updated your informations?</a>
+          </div>
+          <div>
+          <ng:switch on="User.repo>0">
+          <ul ng:switch-when="false" class="nav nav-list">
+            <li class="nav-header">Repos</li>
+            <li ng-repeat="repo in User.repos"><a href="#"><span class="label label-important">Off</span> {{repo.name}}</a></li>
+          </ul>
           </ng:switch>
+          <ul class="nav nav-list">
+            <li class="nav-header">Rooms</li>
+          </ul>
+          </div>
         </div>
       </div>
       <div class="span8">
