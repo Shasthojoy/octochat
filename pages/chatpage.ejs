@@ -28,13 +28,23 @@
           <p ng-hide="User.loginName">
           <a ng-click="update()">Have you ever updated your informations?</a>
           </p>
-        </div>
-        <div ng-controller="RepoListController">
-          <ul>
-            <li ng-repeat="repo in repos">
-              {{repo.name}}
-            </li>
-          </ul>
+          <div class="accordion" id="reposList">
+            <div class="accordion-group">
+              <div class="accordion-heading">
+                <a class="accordion-toggle" data-toggle="collapse" data-parent="#reposList" href="#repoListData">
+                  Repos
+                </a>
+              </div>
+
+              <div id="repoListData" class="accordion-body collapse in">
+                <div class="accordion-inner">
+                  <ul>
+                    <li ng-repeat="repo in User.repos">{{repo.name}}</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <div class="span8">
