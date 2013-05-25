@@ -6,15 +6,18 @@ var app = express();
 var server = require('http').createServer(app);
 var io = require('socket.io').listen(server);
 var settings = require('./settings.js').loadSettings();
+var RedisStore = require('connect-redis')(express);
 
 var UserController = require('./lib/user_controller.js');
 //var RepoController = require('./lib/repo_controller.js');
 
 app.use(express.static(settings.staticfolder));
 app.use(express.cookieParser());
+var redisUrl = require('url').parse(settings.redisurl);
 app.use(express.session({
   secret: settings.secret,
-  store: new express.session.MemoryStore
+  store: new RedisStore({host: redisUrl.hostname, port: redisUrl.port})
+  //store: new express.session.MemoryStore
 }));
 app.set('views', settings.viewsfolder);
 app.set('view engine', 'ejs');
