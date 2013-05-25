@@ -29,7 +29,8 @@
           <p ng-hide="User.loginName">
           <a ng-click="update()">Have you ever updated your informations?</a>
           </p>
-          <div class="accordion" id="reposList">
+          <ng:switch on="User.repo>0">
+          <div ng:switch-when="false" class="accordion" id="reposList">
             <div class="accordion-group">
               <div class="accordion-heading">
                 <a class="accordion-toggle" data-toggle="collapse" data-parent="#reposList" href="#repoListData">
@@ -46,6 +47,7 @@
               </div>
             </div>
           </div>
+          </ng:switch>
         </div>
       </div>
       <div class="span8">
