@@ -9,12 +9,31 @@
     <script src="/js/octochat.min.js"></script>
     <script src="/js/jquery.js"></script>
     <script src="/js/bootstrap.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
     <title>Chatpage</title>
   </head>
   <body>
-    <div class="container">
-    <div class="row">
-      <div class="span4">
+    <script>
+      var socket = io.connect('http://localhost:3000');
+
+      socket.on('infos', function(username, data) {
+        var div = document.createElement('div');
+        if(username=='SERVER') div.className = 'alert alert-info';
+
+        div.appendChild(document.createTextNode(username + ':'));
+        div.appendChild(document.createElement('br'));
+        div.appendChild(document.createTextNode(data));
+
+        document.getElementById('viewer').appendChild(div);
+      });
+
+      var join = function(room) {
+        socket.emit('join', room);
+      };
+    </script>
+    <div class="container-fluid box">
+    <div class="row-fluid uniquerow">
+      <div class="span4 leftbox">
         <div ng-controller="UserController">
           <div>
             <div class="profilebox">
@@ -31,9 +50,9 @@
               </div>
             </div>
             <div class="joinbox">
-              <div class="input-append">
-                <input class="span2" placeholder="Join room..." type="text">
-                <span class="add-on"><a href="#" class="rocketlink"><i class="icon-rocket"></i></a></span>
+              <div class="input-append joinboxcombo">
+                <input class="span2" placeholder="Join room..." id="toJoinRoom" type="text">
+                <span class="add-on"><a href="#" onclick="join(document.getElementById('toJoinRoom').value)" class="rocketlink"><i class="icon-rocket"></i></a></span>
               </div>
             </div>
           </div>
@@ -62,7 +81,11 @@
           </div>
         </div>
       </div>
-      <div class="span8">
+      <div class="span8 chatbox">
+          <div class="viewer well" id="viewer">
+          </div>
+          <div class="editor">
+          </div>
       </div>
     </div>
     </div>

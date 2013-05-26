@@ -21,6 +21,12 @@
 .joinbox {
   text-align: center;
   margin-top: 5px;
+  width: 100%;
+}
+
+.joinboxcombo {
+  min-width: 100%;
+  max-width: 100%;
 }
 
 .profilebox {
@@ -29,5 +35,35 @@
 }
 
 .optsmenu {
-  text-align: left
+  text-align: left;
+}
+
+.viewer {
+  min-height: 60%;
+  max-height: 60%;
+  overflow-y: scroll;
+}
+
+.chatbox {
+  height: 100%;
+}
+
+.leftbox {
+  height: 100%;
+}
+
+.uniquerow {
+  height: 100%;
+}
+
+.box {
+  height: 100%;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
 }

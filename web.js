@@ -4,10 +4,10 @@ require('./setdb.js');
 var express = require('express');
 var app = express();
 var server = require('http').createServer(app);
-var io = require('socket.io').listen(server);
 var settings = require('./settings.js').loadSettings();
 var RedisStore = require('connect-redis')(express);
 
+var ChatController = require('./lib/chat_controller.js');
 var UserController = require('./lib/user_controller.js');
 var RoomController = require('./lib/room_controller.js');
 
@@ -49,5 +49,6 @@ app.put('/user', authenticateRequest, UserController.updateUser);
 app.post('/room/:id', authenticateRequest, RoomController.addRoom);
 app.delete('/room/:id', authenticateRequest, RoomController.removeRoom);
 
+ChatController.enable(server);
 server.listen(settings.port);
 console.log('Listening on port ' + settings.port);
