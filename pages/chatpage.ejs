@@ -24,7 +24,7 @@
                  {{User.loginName}}
                   <span class="caret"></span>
                 </button>
-                <ul class="dropdown-menu">
+                <ul class="dropdown-menu optsmenu">
                   <li><a href="#" ng-click="update()"><i class="icon-refresh"></i> Refresh</a></li>
                   <li><a href="/logout"><i class="icon-signout"></i> Logout</a></li>
                 </ul>
@@ -40,13 +40,22 @@
           <div ng-hide="User.loginName">
             <a ng-click="update()">Have you ever updated your informations?</a>
           </div>
-          <div>
-          <ng:switch on="User.repo>0">
-          <ul ng:switch-when="false" class="nav nav-list">
+          <div ng-controller="RoomController">
+          <ul class="nav nav-list">
             <li class="nav-header">Repos</li>
-            <li ng-repeat="repo in User.repos"><a href="#"><span class="label label-important">Off</span> {{repo.name}}</a></li>
+            <li ng-repeat="(repoName, repo) in User.repos">
+            <ng:switch on="repo.enabled">
+            <a ng:switch-when="false" href="#" ng-click="enable(repoName)">
+              <span class="label label-important">Off </span>
+              {{repoName}}
+            </a>
+            <a ng:switch-when="true" href="#" ng-click="disable(repoName)">
+              <span class="label label-success">On </span>
+              {{repoName}}
+            </a>
+            </ng:switch>
+            </li>
           </ul>
-          </ng:switch>
           <ul class="nav nav-list">
             <li class="nav-header">Rooms</li>
           </ul>

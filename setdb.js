@@ -18,7 +18,14 @@ octodb.connectToDb(function(err, db) {
           access_token: 'TOKEN',
           login_name: 'LOGIN NAME',
           avatar_url: 'AVATAR_URL',
-          repos: []
+          repos: {
+            'REPO_NAME1': {
+              enabled: false
+            },
+            'REPO_NAME2': {
+              enabled: true
+            }
+          }
         };
         collection.insert(template_user, function(err, result) {
           console.log('Inserted ' + JSON.stringify(result));

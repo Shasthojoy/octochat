@@ -28,6 +28,7 @@
     "ejs": "~0.8.4",
     "socket.io": "~0.9.14",
     "uglify-js": "~2.3.6",
-    "connect-redis": "~1.4.5"
+    "connect-redis": "~1.4.5",
+    "redis-url": "~0.1.0"
   }
 }

@@ -208,7 +208,7 @@ describe('The user_controller', function() {
     var fakeInnerRepo = function() {};
     fakeInnerRepo.prototype.getFromUser = function(object, callback) {
       assert(object.user, 'the user login name');
-      callback(null, [{full_name: 'repo1'}, {full_name: 'repo2'}]);
+      callback(null, [{full_name: 'repo1'}]);
     };
     var fakegithub = function(object) {
       assert.equal(object.version, '3.0.0');
@@ -219,11 +219,17 @@ describe('The user_controller', function() {
       assert.equal(object.type, 'oauth');
       assert.equal(object.token, 'the user token');
     };
+    var fakeroom = {};
+    fakeroom.find = function(item, callback) {
+      assert.equal(item, 'repo1');
+      callback(null, null);
+    };
 
     var userController = SandboxedModule.require('../lib/user_controller.js', {
       requires: {
         './user.js': fakeuser,
-        'github': fakegithub
+        'github': fakegithub,
+        './room.js': fakeroom
       }
     });
 
@@ -291,34 +297,5 @@ describe('The user_controller', function() {
 
     userController.updateUser(req, res);
   });
-
-  //it('should load the repo list of a saved user', function(done) {
-    //var req = {};
-    //req.session = { userid: 'an user id' };
-    //var res = {};
-    //res.send = function(code, jsonList) {
-      //assert.equal(code, 200);
-      //assert.equal(jsonList.repos.length, 2);
-      //done();
-    //};
-    //var fakerepo = {};
-    //fakerepo.getUserRepos = function(user, callback) {
-      //assert.equal(user.accessToken, 'the user token');
-      //callback(null, ['repo1', 'repo2']);
-    //};
-    //var fakeuser = {};
-    //fakeuser.find = function(userid, callback) {
-      //assert.equal(userid, 'an user id');
-      //callback(null, { accessToken: 'the user token' });
-    //};
-    //var userController = SandboxedModule.require('../lib/user_controller.js', {
-      //requires: {
-        //'./user.js': fakeuser,
-        //'./repo.js': fakerepo
-      //}
-    //});
-
-    //userController.getUserRepoList(req, res);
-  //});
 
 });
