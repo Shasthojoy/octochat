@@ -2,7 +2,7 @@
 require('./setdb.js');
 require('nodefly').profile(
     'dbbc8501-37af-4607-bbf3-665b87faa552',
-    ['octochat']
+    ['octochat', '@Heroku']
 );
 
 var express = require('express');
