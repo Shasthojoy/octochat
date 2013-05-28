@@ -1,8 +1,8 @@
 // initializing db
 require('./setdb.js');
 require('nodefly').profile(
-  '88122927b4e3757d8f6d986708f63350',
-  ['octochat', 'Heroku']
+    'dbbc8501-37af-4607-bbf3-665b87faa552',
+    ['octochat']
 );
 
 var express = require('express');
