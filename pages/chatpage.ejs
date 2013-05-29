@@ -16,6 +16,10 @@
     <script>
       var socket = io.connect('http://' + window.location.host);
 
+      var send = function(msg) {
+        socket.emit('message', msg);
+      };
+
       var writeText = function(type, text) {
         var div = document.createElement('div');
 
@@ -95,6 +99,7 @@
           <div class="viewer well" id="viewer">
           </div>
           <div class="editor">
+            <input type="TEXT" id="text"><input type="BUTTON" onclick="send(document.getElementById('text').value)" value="invia">
           </div>
       </div>
     </div>
