@@ -11,12 +11,15 @@ describe('room', function() {
 
   it('should save itself', function(done) {
 
-    var fakecache = {};
-    fakecache.octocache = {};
-
-    fakecache.octocache.set = function(key, value) {
+    var fakeclient = {};
+    fakeclient.set = function(key, value) {
       assert.equal(key, 'room id');
       assert.equal(value, true);
+    };
+
+    var fakecache = {};
+    fakecache.client = function() {
+      return fakeclient;
     };
 
     var roomModule = SandboxedModule.require('../lib/room.js', {
@@ -53,12 +56,15 @@ describe('room', function() {
 
   it('should delete itself', function(done) {
 
-    var fakecache = {};
-    fakecache.octocache = {};
-
-    fakecache.octocache.del = function(key, callback) {
+    var fakeclient = {};
+    fakeclient.del = function(key, callback) {
       assert.equal(key, 'room id');
       callback(null, 1);
+    };
+
+    var fakecache = {};
+    fakecache.client = function() {
+      return fakeclient;
     };
 
     var roomModule = SandboxedModule.require('../lib/room.js', {
@@ -95,12 +101,15 @@ describe('room', function() {
 
   it('should find a room from the cache', function(done) {
 
-    var fakecache = {};
-    fakecache.octocache = {};
-
-    fakecache.octocache.get = function(key, callback) {
+    var fakeclient = {};
+    fakeclient.get = function(key, callback) {
       assert.equal(key, 'room id');
       callback(null, true);
+    };
+
+    var fakecache = {};
+    fakecache.client = function() {
+      return fakeclient;
     };
 
     var roomModule = SandboxedModule.require('../lib/room.js', {
@@ -123,12 +132,15 @@ describe('room', function() {
 
   it('should pass an error if room is not found', function(done) {
 
-    var fakecache = {};
-    fakecache.octocache = {};
-
-    fakecache.octocache.get = function(key, callback) {
+    var fakeclient = {};
+    fakeclient.get = function(key, callback) {
       assert.equal(key, 'room id');
       callback(null, null);
+    };
+
+    var fakecache = {};
+    fakecache.client = function() {
+      return fakeclient;
     };
 
     var roomModule = SandboxedModule.require('../lib/room.js', {

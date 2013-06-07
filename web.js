@@ -18,14 +18,17 @@ var RoomController = require('./lib/room_controller.js');
 app.use(express.static(settings.staticfolder));
 app.use(express.cookieParser());
 var redisUrl = require('url').parse(settings.redisurl);
+
+var redisStore = new RedisStore({
+  host: redisUrl.hostname,
+  port: redisUrl.port,
+  pass: redisUrl.auth ? redisUrl.auth.split(':')[1] : undefined,
+  prefix: 'session'
+});
+
 app.use(express.session({
   secret: settings.secret,
-  store: new RedisStore({
-    host: redisUrl.hostname,
-    port: redisUrl.port,
-    pass: redisUrl.auth ? redisUrl.auth.split(':')[1] : undefined,
-    prefix: 'session'
-  })
+  store: redisStore
 }));
 app.set('views', settings.viewsfolder);
 app.set('view engine', 'ejs');
@@ -53,6 +56,6 @@ app.put('/user', authenticateRequest, UserController.updateUser);
 app.post('/room/:id', authenticateRequest, RoomController.addRoom);
 app.delete('/room/:id', authenticateRequest, RoomController.removeRoom);
 
-ChatController.enable(server);
+ChatController.enable(server, redisStore, express.cookieParser());
 server.listen(settings.port);
 console.log('Listening on port ' + settings.port);

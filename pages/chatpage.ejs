@@ -37,8 +37,8 @@
       socket.on('infos', function(data) {
         writeText('info', data);
       });
-      socket.on('message', function(message) {
-        writeText('message', message);
+      socket.on('message', function(author, message) {
+        writeText('message', author + ": " + message);
       });
 
       var join = function(room) {
