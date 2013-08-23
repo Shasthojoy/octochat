@@ -1,3 +1,3 @@
 OctoChat
 
-[![Build Status](https://travis-ci.org/helloIAmPau/octochat.png?branch=master)](https://travis-ci.org/helloIAmPau/octochat)
+[![Build Status](https://drone.io/github.com/helloIAmPau/octochat/status.png)](https://drone.io/github.com/helloIAmPau/octochat/latest)
