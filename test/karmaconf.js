@@ -8,5 +8,5 @@ files = [
   ];
 
 autoWatch = false;
-browsers = ['Firefox'];
+browsers = ['Firefox', 'Chrome'];
 singleRun = true;
